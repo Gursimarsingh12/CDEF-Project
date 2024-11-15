@@ -27,7 +27,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     return await login_user(form_data)
 
 @guest_router.post("/refresh", status_code=status.HTTP_200_OK)
-async def refresh(refresh_token: str = Header(...)):
+async def refresh(refresh_token: str = Header()):
     return await refreshAccessToken(refresh_token)
 
 @auth_router.get("/me", response_model=UserResponse)
