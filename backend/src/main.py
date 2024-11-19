@@ -25,5 +25,6 @@ async def root():
 app.include_router(UserRoutes.guest_router)
 app.include_router(UserRoutes.auth_router)
 
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=Config.PORT)
