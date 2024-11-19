@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from auth.DatabaseController import connectToDB, closeDbConnection
 from auth.routers import UserRoutes
 from config import Config
+from summarizer.router import SummarizerRoute
 
 app = FastAPI()
 
@@ -24,6 +25,7 @@ async def root():
 
 app.include_router(UserRoutes.guest_router)
 app.include_router(UserRoutes.auth_router)
+app.include_router(SummarizerRoute.summarizer_router)
 
 
 if __name__ == "__main__":
