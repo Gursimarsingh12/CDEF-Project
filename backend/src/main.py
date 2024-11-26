@@ -5,6 +5,7 @@ from auth.DatabaseController import connectToDB, closeDbConnection
 from auth.routers import UserRoutes
 from config import Config
 from summarizer.router import SummarizerRoute
+from transcription.router import TranscriptionRoute
 
 app = FastAPI()
 
@@ -26,7 +27,7 @@ async def root():
 app.include_router(UserRoutes.guest_router)
 app.include_router(UserRoutes.auth_router)
 app.include_router(SummarizerRoute.summarizer_router)
-
+app.include_router(TranscriptionRoute.transcription_router)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=Config.PORT)
+    uvicorn.run(app, host="0.0.0.0", port=Config.PORT, timeout_keep_alive=100000)

@@ -33,3 +33,15 @@ async def getTokenCollection():
         raise HTTPException(status_code=500, detail="Database connection not established")
     db = client.cdef
     return db.get_collection("tokens")
+
+async def getTranscriptionCollection():
+    if client is None:
+        raise HTTPException(status_code=500, detail="Database connection not established")
+    db = client.cdef
+    return db.get_collection("transcriptions")
+
+async def getSummarizationCollection():
+    if client is None:
+        raise HTTPException(status_code=500, detail="Database connection not established")
+    db = client.cdef
+    return db.get_collection("summarizations")
