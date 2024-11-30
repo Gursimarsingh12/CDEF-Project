@@ -4,6 +4,7 @@ from fastapi import HTTPException
 from summarizer.request.SummarizationRequest import SummarizationRequest
 from summarizer.response.SummarizationResponse import SummarizationResponse
 from auth.DatabaseController import getSummarizationCollection
+from datetime import datetime
 
 try:
     summarizer = pipeline("summarization", model="google-t5/t5-small")
@@ -23,14 +24,16 @@ async def summarizeText(request: SummarizationRequest) -> SummarizationResponse:
         document = {
             "email": request.email,
             "text": request.text,
-            "summary": summary
+            "summary": summary,
+            "uploaded_at": datetime.now()
         }
         summarization_collection = await getSummarizationCollection()
         summarization_collection.insert_one(document)
         return SummarizationResponse(
             email=request.email,
             text=request.text,
-            summary=summary
+            summary=summary,
+            uploaded_at=document["uploaded_at"].strftime("%Y-%m-%d %H:%M:%S")
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Summarization failed: {str(e)}")

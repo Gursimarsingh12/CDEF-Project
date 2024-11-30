@@ -49,7 +49,8 @@ async def process_audio_file(email: str, file: UploadFile) -> TranscriptionRespo
         email=email,
         file_name=file.filename,
         file_link=file_link,
-        transcription=transcription
+        transcription=transcription,
+        uploaded_at=metadata["uploaded_at"].strftime("%Y-%m-%d %H:%M:%S")
     )
     
 def upload_file_to_firebase(email: str, file_name: str, file_data: bytes, content_type: str) -> str:
