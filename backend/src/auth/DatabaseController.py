@@ -2,6 +2,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from typing import Optional
 from fastapi import HTTPException
 from config import Config
+import certifi
 
 client: Optional[AsyncIOMotorClient] = None
 
@@ -10,7 +11,11 @@ async def connectToDB():
     if client is None:
         try:
             mongo_uri = Config.MONGO_URI
-            client = AsyncIOMotorClient(mongo_uri)
+            client = AsyncIOMotorClient(
+                mongo_uri,
+                tlsCAFile=certifi.where(),
+                tls=True
+                )
             print("Connected to MongoDB")
         except Exception as e:
             print(f"Error connecting to MongoDB: {e}")
